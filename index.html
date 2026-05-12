@@ -2,9 +2,13 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lernmore Consulting · AI-Driven Amazon Management for SKU-Intensive Brands</title>
-<meta name="description" content="For SKU-intensive manufacturers with deep catalogs. We empower your team to run Amazon, with AI-driven tools for content and day-to-day operations. Twenty years inside this kind of business.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lernmore Consulting · Automated Amazon Management for SKU-Intensive Brands</title>
+<meta name="description" content="For SKU-intensive manufacturers with deep catalogs. We empower your team to run Amazon, with automation built for content and day-to-day operations at scale. Twenty years inside this kind of business.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -76,10 +80,12 @@
   /* Navigation */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: rgba(17, 24, 32, 0.9); backdrop-filter: blur(24px);
-    border-bottom: 1px solid rgba(255,255,255,0.05); height: 72px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid rgba(255,255,255,0.08); height: 72px;
+    padding-top: env(safe-area-inset-top, 0);
+    height: calc(72px + env(safe-area-inset-top, 0));
   }
-  [data-theme="light"] nav { background: rgba(250, 250, 249, 0.85); }
+  [data-theme="light"] nav { background: var(--bg-primary); border-bottom-color: rgba(0,0,0,0.08); }
   .nav-inner {
     max-width: 1140px; margin: 0 auto; padding: 0 40px;
     display: flex; align-items: center; justify-content: space-between; height: 100%;
@@ -89,7 +95,8 @@
     text-decoration: none; height: 44px;
   }
   .nav-logo img {
-    height: 100%; width: auto; display: block;
+    height: 100%; max-height: 100%; width: auto;
+    display: block; object-fit: contain;
     transition: opacity 0.3s;
   }
   .nav-logo:hover img { opacity: 0.85; }
@@ -462,18 +469,35 @@
   @media (max-width: 900px) {
     .container { padding: 0 24px; }
     .nav-toggle { display: flex; }
-    nav { height: 76px; }
-    .nav-links { top: 76px; }
-    .nav-logo { height: 48px; }
+    nav {
+      height: 64px;
+      height: calc(64px + env(safe-area-inset-top, 0));
+      padding-top: env(safe-area-inset-top, 0);
+      background: var(--bg-primary);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      z-index: 1000;
+    }
+    [data-theme="light"] nav { background: var(--bg-primary); }
+    .nav-logo { height: 36px; }
+    .theme-toggle { padding: 8px 10px; }
+    .theme-toggle .theme-label { display: none; }
+    .nav-links { top: calc(64px + env(safe-area-inset-top, 0)); }
     .nav-links {
-      position: fixed; top: 72px; left: 0; right: 0;
+      position: fixed; left: 0; right: 0;
       background: var(--bg-secondary); flex-direction: column;
       gap: 0; padding: 16px 24px 32px;
       border-bottom: 1px solid var(--border);
-      transform: translateY(-110%); transition: transform 0.35s ease;
+      transform: translateY(-100%);
+      transition: transform 0.35s ease, visibility 0s linear 0.35s;
+      visibility: hidden;
       z-index: 999; pointer-events: none;
     }
-    body.nav-open .nav-links { transform: translateY(0); pointer-events: auto; }
+    body.nav-open .nav-links {
+      transform: translateY(0); pointer-events: auto;
+      visibility: visible;
+      transition: transform 0.35s ease, visibility 0s linear 0s;
+    }
     .nav-links li { width: 100%; }
     .nav-links a {
       display: block; padding: 18px 0; font-size: 15px;
@@ -487,8 +511,7 @@
     .hero-subtitle { font-size: 17px; margin-bottom: 40px; }
     .hero-meta { display: flex; flex-direction: column; gap: 28px; padding-top: 32px; }
     .hero-meta > div { flex: none; }
-    section { padding: 80px 0; }
-    .section-title { font-size: clamp(30px, 7vw, 44px); }
+    section { padding: 80px 0; scroll-margin-top: 80px; }
     .section-intro { font-size: 17px; }
     .start-grid, .about-layout { grid-template-columns: 1fr; gap: 40px; }
     .start-lead, .start-body p.start-lead { font-size: 22px !important; }
@@ -519,9 +542,10 @@
     .hero-eyebrow { font-size: 10px; letter-spacing: 3px; margin-bottom: 28px; }
     .section-number { font-size: 10px; letter-spacing: 2px; }
     section { padding: 64px 0; }
-    .nav-inner { padding: 0 20px; }
-    .nav-logo { height: 40px; }
-    .theme-toggle { padding: 8px 12px; font-size: 12px; }
+    .nav-inner { padding: 0 16px; gap: 8px; }
+    .nav-logo { height: 32px; }
+    .theme-toggle { padding: 7px 9px; }
+    .nav-toggle { width: 36px; height: 36px; }
     .work-tags { gap: 6px; }
     .work-tag { padding: 5px 10px; font-size: 10px; }
     .btn-gold { padding: 16px 28px; font-size: 14px; }
@@ -547,9 +571,9 @@
       <li><a href="#about">About</a></li>
     </ul>
     <div class="nav-actions">
-      <button class="theme-toggle" onclick="toggleTheme()">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        Theme
+        <span class="theme-label">Theme</span>
       </button>
       <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -567,7 +591,7 @@
     <div class="hero-content">
       <div class="hero-eyebrow">Amazon Management for SKU-Intensive Brands</div>
       <h1>The volume stays.<br><em>The headache leaves.</em></h1>
-      <p class="hero-subtitle">For manufacturers with deep catalogs who need Amazon to perform and want it off their desk. We help you run the channel, with AI-driven tools that make content and day-to-day operations work the way they should. Twenty years inside this kind of business.</p>
+      <p class="hero-subtitle">For manufacturers with deep catalogs who need Amazon to perform and want it off their desk. We help you run the channel, with automation built for content and day-to-day operations at scale. Twenty years inside this kind of business.</p>
       <div class="hero-meta">
         <div>
           <div class="hero-meta-label">Built for</div>
@@ -589,15 +613,15 @@
   <div class="container">
     <div class="section-header">
       <div class="section-number">01 — The Starting Point</div>
-      <h2 class="section-title">You need the channel. <em>You don't want to run it.</em></h2>
+      <h2 class="section-title">You need the channel.<br><em>You don't want to run it.</em></h2>
     </div>
 
     <div class="start-grid">
       <div class="start-body fade-in">
         <p class="start-lead">Most high-SKU brands don't love Amazon. They also can't afford to be without it.</p>
-        <p>For years, the arrangement was simple: <strong>you sold to a distributor or retailer, somebody else handled Amazon, and you got the volume without touching the platform.</strong></p>
-        <p>That arrangement is breaking. Distributors are exiting. Retailers like Amazon are pushing the operational work back. Brands that depended on the old model are suddenly responsible for Amazon, with a team that was never built for it and a catalog that's too deep to manage by hand.</p>
-        <p>Insourcing means hiring people who understand fitment, advertising bid logic, MAP enforcement, the buy box, and a dozen other things that have nothing to do with your core business. Hiring an agency means handing brand control to someone who's also running ten of your competitors.</p>
+        <p>For years, the arrangement was simple: <strong>you sold to a distributor, somebody else handled Amazon, and you got the volume without touching the platform.</strong></p>
+        <p>Amazon is pushing the operational work back. Brands that depended on the old model are suddenly responsible for Amazon, with a team that was never built for it and a catalog that's too deep to manage by hand.</p>
+        <p>Insourcing means hiring people who understand fitment, advertising bid logic, MAP enforcement, the buy box, and a dozen other things that have nothing to do with your core business. Hiring an agency means handing brand control to someone who doesn't understand your business or category.</p>
         <p>The volume is too big to walk away from. The operation is too complicated to absorb. That's the box.</p>
       </div>
 
@@ -617,16 +641,16 @@
   <div class="container">
     <div class="section-header">
       <div class="section-number">02 — What We Do</div>
-      <h2 class="section-title">One offer. <em>We empower you to run Amazon.</em></h2>
+      <h2 class="section-title">One offer.<br><em>We empower you to run Amazon.</em></h2>
     </div>
 
     <div class="offer-block fade-in">
-      <h3 class="offer-headline">Your team, empowered to run Amazon. The work scaled by AI-driven tools we've built for this exact problem.</h3>
+      <h3 class="offer-headline">Your team, empowered to run Amazon. The work scaled by automation we've built for this exact problem.</h3>
       <div class="offer-body">
         <p>We sit between you and the platform. Catalog, content, advertising, monitoring, the operational realities that make Amazon work or quietly bleed margin. You stay in control of pricing, brand, and the relationships with your other channels. We work with you and your team and can handle it for you if you want.</p>
-        <p><strong>The leverage comes from AI.</strong> Generating product detail page content at scale for catalogs measured in thousands of SKUs, not dozens. Surfacing the reports that show you what's actually moving and what isn't, every week. Watching for MAP violations and third-party seller problems without a person manually scrolling listings. It's the same work that an agency would do with twenty people and miss things in. We do it with tools that don't.</p>
-        <p>It's not an agency model. We don't take on competing brands in your category. We don't disappear into a managed-services queue. You work directly with an operator who's done this at scale for filtration, parts catalogs, and a $125M Amazon business.</p>
-        <p><strong>The work is built so that, six months from now, your team understands what's happening on the channel, the other channel relationships are protected, and Amazon is no longer the thing keeping you up at night.</strong></p>
+        <p><strong>The leverage comes from automation built for this exact problem.</strong> Product detail page content generated across thousands of SKUs, not dozens. Reports that show what's actually moving and what isn't, every week. MAP violations and third-party seller problems watched continuously, without a person manually scrolling listings. It's the same work an agency would do with twenty people and miss things in. We do it without them.</p>
+        <p>It's not an agency model. You work directly with seasoned Amazon operators who have done this at scale for large product catalogs, and a $150M Amazon business.</p>
+        <p><strong>The work is built so that, 90 days from now, your team understands what's happening on the channel, the other channel relationships are protected, and Amazon is no longer the thing keeping you up at night.</strong></p>
       </div>
     </div>
 
@@ -644,27 +668,21 @@
     <div class="section-header">
       <div class="section-number">03 — Credibility</div>
       <h2 class="section-title">Twenty years inside <em>businesses like yours.</em></h2>
-      <p class="section-intro">SKU-intensive legacy brands. Deep catalogs. The Amazon channel built from inside the business, not described from outside it.</p>
+      <p class="section-intro">SKU-intensive manufacturers. The Amazon channel built from inside the business, not described from outside it.</p>
     </div>
 
     <div class="cred-grid">
       <div class="cred-card fade-in">
         <div class="cred-tag">Full Aftermarket Catalog</div>
-        <div class="cred-result">$125M</div>
+        <div class="cred-result">$150M</div>
         <h3>Amazon business built from zero across thousands of SKUs.</h3>
-        <p>Brakes, filters, hoses, belts, more. Every flavor of channel structure: 1P, 3P, drop ship, hybrid. The deep-catalog Amazon problem, solved inside one business.</p>
+        <p>Every flavor of channel structure: 1P, 3P, drop ship, hybrid. The deep-catalog Amazon problem, solved inside one business.</p>
       </div>
       <div class="cred-card fade-in stagger-1">
-        <div class="cred-tag">FRAM Filtration</div>
-        <div class="cred-result">$20M</div>
-        <h3>Built the filtration category on Amazon from zero in 3 years.</h3>
-        <p>Owned advertising, analytics, and the customer end to end for a heritage brand. The playbook for how a legacy business actually competes on the channel, not just shows up on it.</p>
-      </div>
-      <div class="cred-card fade-in stagger-2">
         <div class="cred-tag">Heavy Duty Filtration</div>
         <div class="cred-result">5x</div>
-        <h3>Faster part lookup. The first online VIN tool for the category.</h3>
-        <p>Took an industry that ran on phone-in lookups and built the first online tool. Aligned with how the buyer actually works. Changed the conversion economics on the front end.</p>
+        <h3>Faster part lookup. The first online vehicle identification number lookup tool for the category.</h3>
+        <p>Our data skills run deep. Took an industry that ran on phone-in lookups and built the first online tool. Aligned with how the buyer actually works. Changed the conversion economics on the front end.</p>
       </div>
     </div>
   </div>
@@ -678,7 +696,7 @@
     <div class="section-header">
       <div class="section-number">04 — Inside the Engagement</div>
       <h2 class="section-title">Where the work <em>actually happens.</em></h2>
-      <p class="section-intro">Content and day-to-day management. The places AI-driven tools change the work, paired with the operator judgment that makes the tools point at the right things.</p>
+      <p class="section-intro">Content and day-to-day management. The places automation changes the work, paired with the operator judgment that makes it point at the right things.</p>
     </div>
 
     <div class="work-list">
@@ -686,7 +704,7 @@
         <div class="work-num">01</div>
         <div class="work-content">
           <h4>Content, at the scale your catalog actually requires.</h4>
-          <p>Titles, bullets, images, A+ content, fitment data, the whole product detail page. Generated by tools built for this, edited by people who know the category. Done across thousands of SKUs, not dozens. Listings that quietly underperform stop quietly underperforming. With an eye towards what moves the needle in an AI world where a computer might be answering the question.</p>
+          <p>Titles, bullets, images, A+ content, fitment data, the whole product detail page. Generated by tools built for this, edited by people who know the category. Done across thousands of SKUs, not dozens. Listings that quietly underperform stop quietly underperforming. With an eye on what wins when an AI is the one answering the shopper's question.</p>
           <div class="work-tags">
             <span class="work-tag">PDPs at Scale</span>
             <span class="work-tag">Listing Health</span>
@@ -733,30 +751,20 @@
   <div class="container">
     <div class="section-header">
       <div class="section-number">05 — How We Work</div>
-      <h2 class="section-title">Three to six month engagements. <em>No agency contracts.</em></h2>
-      <p class="section-intro">Fixed scope, fixed timeline, clear handoff. The team that takes it over after gets a system they can actually run.</p>
+      <h2 class="section-title">No 6-month consulting. No 12-month agency contracts. <em>90 days to build. Then it runs.</em></h2>
+      <p class="section-intro">Fixed scope, fixed price for the build. The system runs after we install it. We stay only when it needs to grow.</p>
     </div>
 
     <div class="how-grid">
       <div class="how-card fade-in">
-        <div class="how-num">Phase 01 · First 30 days</div>
-        <h4>Audit the channel.</h4>
-        <p>Where is your volume actually going? Which listings are bleeding? Where's the MAP problem? Where's the tension point with your other channels? You get a written read of the category, your position in it, and the specific places where work needs to happen.</p>
+        <div class="how-num">Phase 01 · First 90 days</div>
+        <h4>Install the system.</h4>
+        <p>Audit the channel, fix what's broken, stand up the automation. Catalog content rebuilt at scale, advertising restructured, MAP cleaned up, monitoring running. The high-leverage interventions, in priority order. You see what's changing every week. No black box.</p>
       </div>
       <div class="how-card fade-in stagger-1">
-        <div class="how-num">Phase 02 · Days 30 to 120</div>
-        <h4>Fix what's broken.</h4>
-        <p>Catalog content rebuilt at scale, advertising restructured, MAP cleaned up, monitoring stood up. The high-leverage interventions, in priority order. You see what's changing every week. No black box.</p>
-      </div>
-      <div class="how-card fade-in stagger-2">
-        <div class="how-num">Phase 03 · Days 120 to 180</div>
-        <h4>Run the channel.</h4>
-        <p>Weekly cadence on advertising, monitoring, and catalog hygiene. Monthly read on category share and competitive movement. Your team in the loop, learning the rhythm without having to operate it themselves.</p>
-      </div>
-      <div class="how-card fade-in stagger-3">
-        <div class="how-num">Phase 04 · Handoff</div>
-        <h4>Hand it over.</h4>
-        <p>Documentation, training, the playbook your team needs to keep it going. We stay available on retainer if you want it. We walk away if you don't. The system runs either way.</p>
+        <div class="how-num">Phase 02 · After 90 days</div>
+        <h4>It runs. We stay only when it needs to grow.</h4>
+        <p>The system handles the weekly rhythm without us. Advertising disciplined, listings healthy, MAP watched, reports landing in your team's inbox. We stay around for what it needs next: a new product line, a new marketplace, a problem the automation hasn't seen before. Most months it won't need us. That's the point.</p>
       </div>
     </div>
   </div>
@@ -772,9 +780,9 @@
     </div>
     <div class="about-layout">
       <div class="fade-in">
-        <h2 class="section-title">An operator,<br><em>not an agency.</em></h2>
+        <h2 class="section-title">Former operators.<br><em>Who have lived on the front line.</em></h2>
         <div class="about-body">
-          <p>I'm Steven Lerner. I've spent nearly 20 years inside SKU-intensive businesses, mostly automotive aftermarket. Started in the marketing department at UCI/FRAM. Helped build the filtration category on Amazon from zero to $20M. Helped build a $125M Amazon business from zero across a parts catalog of thousands of SKUs. Built the first online VIN lookup tool for heavy duty filtration.</p>
+          <p>I'm Steven Lerner. I've spent nearly 20 years inside SKU-intensive businesses, mostly automotive aftermarket. Started in the marketing department at UCI/FRAM. Helped build the filtration category on Amazon from zero to $20M. Helped build a $150M Amazon business from zero across a parts catalog of thousands of SKUs. Built the first online vehicle identification number lookup tool for heavy duty filtration.</p>
           <p>Lernmore Consulting exists because legacy brands with deep catalogs need people who know this kind of business from the inside, not a managed-services queue. We work with a small number of brands at a time, by design.</p>
         </div>
       </div>
@@ -796,7 +804,7 @@
         <div class="about-fact">
           <div class="about-dot"></div>
           <div>
-            <strong>$125M Amazon business built from zero</strong>
+            <strong>$150M Amazon business built from zero</strong>
             <div class="about-fact-body">Thousands of SKUs across every channel structure. Every operator type. Every pricing and MAP fight.</div>
           </div>
         </div>
@@ -862,7 +870,7 @@
 <footer>
   <div class="container">
     <div class="footer-logo">Lernmore Consulting</div>
-    <p class="footer-txt">AI-Driven Amazon Management for SKU-Intensive Brands · © 2026 Steven Lerner</p>
+    <p class="footer-txt">Automated Amazon Management for SKU-Intensive Brands · © 2026 Steven Lerner</p>
   </div>
 </footer>
 
